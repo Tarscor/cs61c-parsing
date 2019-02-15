@@ -15,8 +15,8 @@ AST* MakeAST(enum NodeType type, char* filename, int linenum) {
     new->children = malloc(sizeof(AST) * new->capacity);
     new->size = 0;
     new->linenum = linenum;
-    new->filename = malloc(strlen(filename));
-    strcpy(filename, new->filename);
+    new->filename = malloc((strlen(filename) + 1) * sizeof(char));
+    strcpy(new->filename, filename);
     return new;
 }
 
