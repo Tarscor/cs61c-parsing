@@ -17,6 +17,7 @@ AST* MakeAST(enum NodeType type, char* filename, int linenum) {
     new->linenum = linenum;
     new->filename = malloc(strlen(filename));
     strcpy(filename, new->filename);
+    return new;
 }
 
 /*
@@ -61,11 +62,11 @@ AST* CopyAST(AST* original) {
    of tree.
 */
 void AppendAST(AST* tree, AST* node) {
-    if (size == capacity) {
+    if (tree->size == tree->capacity) {
         tree->capacity += 1;
         tree->children = (AST**)realloc(tree->children, sizeof(AST*) * tree->capacity);
     }
-    tree->children[size] = node;
+    tree->children[tree->size] = node;
     tree->size += 1;
 }
 
