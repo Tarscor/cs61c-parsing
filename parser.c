@@ -1464,24 +1464,24 @@ AST* BinaryExpr(TokenList** tokens,
   Binary Expression passed in.
 */
 AST* GetNextBinaryExpr(TokenList** tokens, enum BinaryExprType type) {
-    if (type = BINARY_EXPR_LOGICAL_OR) {
+    if (type == BINARY_EXPR_LOGICAL_OR) {
         return BinaryExprLogicalAnd(tokens);
-    } else if (type = BINARY_EXPR_LOGICAL_AND) {
+    } else if (type == BINARY_EXPR_LOGICAL_AND) {
         return BinaryExprBitwiseOr(tokens);
-    } else if (type = BINARY_EXPR_BITWISE_OR) {
+    } else if (type == BINARY_EXPR_BITWISE_OR) {
         return BinaryExprBitwiseXor(tokens);
-    } else if (type = BINARY_EXPR_BITWISE_XOR) {
+    } else if (type == BINARY_EXPR_BITWISE_XOR) {
         return BinaryExprBitwiseAnd(tokens);
-    } else if (type = BINARY_EXPR_BITWISE_AND) {
+    } else if (type == BINARY_EXPR_BITWISE_AND) {
         return BinaryExprEquality(tokens);
-    } else if (type = BINARY_EXPR_EQUALITY) {
+    } else if (type == BINARY_EXPR_EQUALITY) {
         return BinaryExprComparison(tokens);
-    } else if (type = BINARY_EXPR_COMPARISON) {
+    } else if (type == BINARY_EXPR_COMPARISON) {
         return BinaryExprAddSub(tokens);
-    } else if (type = BINARY_EXPR_ADDSUB) {
+    } else if (type == BINARY_EXPR_ADDSUB) {
         return BinaryExprMultDiv(tokens);
     } else {
-        return BaseExpr;
+        return BaseExpr(tokens);
     }
     
 }
