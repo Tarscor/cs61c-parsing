@@ -82,8 +82,26 @@ int CheckErrors(AST* ast) {
 
 */
 int CheckImproperStatements(AST* ast, int is_for, int* incorrect_returns) {
-  /* YOUR CODE HERE */
-  return 0;
+    if (ast->type == NODETYPE_BREAK && !is_for) {
+        fprintf(stderr, "break outside for loop");
+        return -1;
+    } else if (ast->type == NODETYPE_CONTINUE && !is_for) {
+        fprintf(stderr, "continue outside for loop");
+        return -1;
+    } else if (ast->type == NODETYPE_CONTROL_FOR) {
+        if (!CheckImproperStatements(ast->children[3], true, incorrect_returns)) {
+          return -1;
+        }
+    } else if (ast->type == NODETYPE_ERR) {
+        return -1;
+    } else {
+        for (int i = 0; i < ast->size; i++) {
+            if (!CheckImproperStatements(ast->children[i], false, incorrect_returns)) {
+                return -1;
+            }
+        }
+    }
+    return 0;
 }
 
 /*
