@@ -1451,7 +1451,7 @@ AST* BinaryExpr(TokenList** tokens,
       AST* prev = MakeAST(ast_choices[i], (*tokens)->t->filename, (*tokens)->t->linenum);
       AppendAST(prev, first_ast);
       AppendAST(prev, GetNextBinaryExpr(tokens, type));
-      for (int i = 0; (i < size) || ProcessToken(tokens, possible_tokens[i]; i++) {
+      for (int i = 0; (i < size) || ProcessToken(tokens, possible_tokens[i]); i++) {
         if (ProcessToken(tokens, possible_tokens[i])) {
           AST* curr = MakeAST(ast_choices[i], (*tokens)->t->filename, (*tokens)->t->linenum);
           AppendAST(curr, prev);
