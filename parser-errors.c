@@ -89,14 +89,14 @@ int CheckImproperStatements(AST* ast, int is_for, int* incorrect_returns) {
         fprintf(stderr, "continue outside for loop");
         return -1;
     } else if (ast->type == NODETYPE_CONTROL_FOR) {
-        if (!CheckImproperStatements(ast->children[3], 1, incorrect_returns)) {
+        if (CheckImproperStatements(ast->children[3], 1, incorrect_returns)) {
           return -1;
         }
     } else if (ast->type == NODETYPE_ERR) {
         return -1;
     } else {
         for (int i = 0; i < ast->size; i++) {
-            if (!CheckImproperStatements(ast->children[i], 0, incorrect_returns)) {
+            if (CheckImproperStatements(ast->children[i], 0, incorrect_returns)) {
                 return -1;
             }
         }
