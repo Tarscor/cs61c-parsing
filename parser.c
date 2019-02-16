@@ -1460,8 +1460,8 @@ AST* BinaryExpr(TokenList** tokens,
           i = 0;
         }
       }
-    }
       return prev;
+    }
   }
   return first_ast;
 }
