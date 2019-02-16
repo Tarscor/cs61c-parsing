@@ -1448,22 +1448,20 @@ AST* BinaryExpr(TokenList** tokens,
   AST* first_ast = GetNextBinaryExpr(tokens, type);
   for (int i = 0; i < size; i++) {
     if (ProcessToken(tokens, possible_tokens[i])) {
-      AST* ast = MakeAST(ast_choices[i], (*tokens)->t->filename, (*tokens)->t->linenum);
-      AppendAST(ast, first_ast);
-      AppendAST(ast, GetNextBinaryExpr(tokens, type));
-      i = -1;
-      first_ast = ast;
-//      for (int i = 0; i < size; i++) {
-//        if (ProcessToken(tokens, possible_tokens[i])) {
-//          AST* curr = MakeAST(ast_choices[i], (*tokens)->t->filename, (*tokens)->t->linenum);
-//          AppendAST(curr, prev);
-//          AppendAST(curr, BinaryExpr(tokens, possible_tokens, ast_choices, size, type));
-//          prev = curr;
-//          i = -1;
-//        }
-//      }
+      AST* prev = MakeAST(ast_choices[i], (*tokens)->t->filename, (*tokens)->t->linenum);
+      AppendAST(prev, first_ast);
+      AppendAST(prev, GetNextBinaryExpr(tokens, type));
+      for (int i = 0; i < size; i++) {
+        if (ProcessToken(tokens, possible_tokens[i])) {
+          AST* curr = MakeAST(ast_choices[i], (*tokens)->t->filename, (*tokens)->t->linenum);
+          AppendAST(curr, prev);
+          AppendAST(curr, BinaryExpr(tokens, possible_tokens, ast_choices, size, type));
+          prev = curr;
+          i = -1;
+        }
+      }
+      return prev;
     }
-    return first_ast;
   }
   return first_ast;
 }
