@@ -92,6 +92,7 @@ int CheckImproperStatements(AST* ast, int is_for, int* incorrect_returns) {
         if (CheckImproperStatements(ast->children[3], 1, incorrect_returns)) {
           return 1;
         }
+        return 0;
     } else if (ast->type == NODETYPE_ERR) {
         return 1;
     } else if (ast->type == NODETYPE_FUNC_DECL) {
