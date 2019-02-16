@@ -1490,7 +1490,6 @@ AST* GetNextBinaryExpr(TokenList** tokens, enum BinaryExprType type) {
     } else if (type == BINARY_EXPR_ADDSUB) {
         return BinaryExprMultDiv(tokens);
     } else {
-        return BaseExpr(tokens);
+        return PrefixExpr(tokens);
     }
-    
 }
