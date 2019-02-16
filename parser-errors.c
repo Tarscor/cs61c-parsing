@@ -104,6 +104,10 @@ int CheckImproperStatements(AST* ast, int is_for, int* incorrect_returns) {
     } else if (ast->type == NODETYPE_BLOCK) {
         for (int i = 0; i < ast->size; i++) {
             AST* child = ast->children[i];
+            int check = CheckImproperStatements(child->children[1], is_for, incorrect_returns);
+            if (check) {
+                return check;
+            }
             if (child->type == NODETYPE_CONTROL_IF_ELSE) {
                 CheckImproperStatements(child->children[1], is_for, incorrect_returns);
                 CheckImproperStatements(child->children[2], is_for, incorrect_returns);
