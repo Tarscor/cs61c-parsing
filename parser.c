@@ -1451,7 +1451,7 @@ AST* BinaryExpr(TokenList** tokens,
       AST* ast = MakeAST(ast_choices[i], (*tokens)->t->filename,
                          (*tokens)->t->linenum);
       AppendAST(ast, first_ast);
-      TokenList** temp;
+      TokenList** temp = malloc(sizeof(TokenList));
       *temp = (*tokens)->next;
       for (int i = 0; i < size; i++) {
           if (ProcessToken(temp, possible_tokens[i])) {
