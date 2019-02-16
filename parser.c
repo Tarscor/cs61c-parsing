@@ -1452,7 +1452,7 @@ AST* BinaryExpr(TokenList** tokens,
                          (*tokens)->t->linenum);
       AppendAST(ast, first_ast);
       for (int i = 0; i < size; i++) {
-          (*tokens)->next;
+          *tokens = (*tokens)->next;
           if (ProcessToken(tokens, possible_tokens[i])) {
               AppendAST(ast, BinaryExpr(tokens, possible_tokens, ast_choices, size, type));
               return ast;
