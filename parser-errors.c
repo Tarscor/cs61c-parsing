@@ -94,6 +94,26 @@ int CheckImproperStatements(AST* ast, int is_for, int* incorrect_returns) {
         }
     } else if (ast->type == NODETYPE_ERR) {
         return -1;
+    } else if (ast->type == NODETYPE_FUNC_DECL) {
+        CheckImproperStatements(ast->children[3], is_for, incorrect_returns);
+        if (*incorrect_returns == 1) {
+            return -1;
+        }
+        return 0;
+    } else if (ast->type == NODETYPE_BLOCK) {
+        for (int i = 0; i < ast->size; i++) {
+            AST* child = ast->children[i];
+            if (child->type == NODETYPE_CONTROL_IF_ELSE) {
+                CheckImproperStatements(child->children[1], is_for, incorrect_returns);
+                CheckImproperStatements(child->children[2], is_for, incorrect_returns);
+            }
+            if (child->type == NODETYPE_RETURN) {
+                *incorrect_returns = -1;
+            }
+            if (!(*incorrect_returns)) {
+                *incorrect_returns = 1;
+            }
+        }
     } else {
         for (int i = 0; i < ast->size; i++) {
             if (CheckImproperStatements(ast->children[i], 0, incorrect_returns)) {
