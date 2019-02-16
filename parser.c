@@ -1453,6 +1453,7 @@ AST* BinaryExpr(TokenList** tokens,
       AppendAST(ast, first_ast);
       for (int i = 0; i < size; i++) {
           if (ProcessToken(tokens, possible_tokens[i])) {
+              printf("hi");
               AppendAST(ast, BinaryExpr(tokens, possible_tokens, ast_choices, size, type));
               return ast;
           }
