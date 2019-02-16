@@ -95,13 +95,13 @@ int CheckImproperStatements(AST* ast, int is_for, int* incorrect_returns) {
     } else if (ast->type == NODETYPE_ERR) {
         return -1;
     } else {
-        for (int i = 0; i < ast->size; i++) {
-            if (!CheckImproperStatements(ast->children[i], 0, incorrect_returns)) {
-                return -1;
-            }
-        }
+//        for (int i = 0; i < ast->size; i++) {
+//            if (!CheckImproperStatements(ast->children[i], 0, incorrect_returns)) {
+//                return -1;
+//            }
+//        }
+        return 0;
     }
-    return 0;
 }
 
 /*
