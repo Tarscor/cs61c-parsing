@@ -1458,6 +1458,7 @@ AST* BinaryExpr(TokenList** tokens,
           AppendAST(curr, BinaryExpr(tokens, possible_tokens, ast_choices, size, type));
           prev = curr;
           i = -1;
+          *tokens = (*tokens)->next;
         }
       }
       return prev;
