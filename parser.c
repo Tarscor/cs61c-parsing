@@ -1456,10 +1456,12 @@ AST* BinaryExpr(TokenList** tokens,
       for (int i = 0; i < size; i++) {
           if (ProcessToken(temp, possible_tokens[i])) {
               AppendAST(ast, BinaryExpr(tokens, possible_tokens, ast_choices, size, type));
+              free(temp);
               return ast;
           }
       }
       AppendAST(ast, GetNextBinaryExpr(tokens, type));
+      free(temp);
       return ast;
     }
   }
