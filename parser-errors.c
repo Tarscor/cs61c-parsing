@@ -109,8 +109,9 @@ int CheckImproperStatements(AST* ast, int is_for, int* incorrect_returns) {
                 return check;
             }
             if (child->type == NODETYPE_CONTROL_IF_ELSE) {
-                CheckImproperStatements(child->children[1], is_for, incorrect_returns);
-                CheckImproperStatements(child->children[2], is_for, incorrect_returns);
+                if ((CheckImproperStatements(child->children[1], is_for, incorrect_returns) == 0)  && (CheckImproperStatements(child->children[2], is_for, incorrect_returns) == 0)) {
+                    return 0;
+                }
             }
             if ((child->type == NODETYPE_RETURN) && !(*incorrect_returns)) {
                 *incorrect_returns = -1;
