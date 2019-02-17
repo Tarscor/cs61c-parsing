@@ -114,7 +114,7 @@ int CheckImproperStatements(AST* ast, int is_for, int* incorrect_returns) {
                 if (child->children->size == 3) {
                     CheckImproperStatements(child->children[2], is_for, incorrect_returns);
                 } else {
-                    if (child[child->size - 1] != NODETYPE_RETURN) {
+                    if ((child[child->size) - 1] != NODETYPE_RETURN) {
                         *incorrect_returns += 1;
                     }
                 }
