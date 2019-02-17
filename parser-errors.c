@@ -96,28 +96,34 @@ int CheckImproperStatements(AST* ast, int is_for, int* incorrect_returns) {
     } else if (ast->type == NODETYPE_ERR) {
         return 1;
     } else if (ast->type == NODETYPE_FUNC_DECL) {
-        return CheckImproperStatements(ast->children[3], is_for, incorrect_returns);
-//        if (*incorrect_returns > 0) {
-//            return 1;
-//        }
-//        return 0;
+        if ((ast->children->size == 4) && (CheckImproperStatements(ast->children[3], is_for, incorrect_returns)) {
+            fprintf(stderr, "no return in function");
+            return 1;
+        }
+        return 0;
     } else if (ast->type == NODETYPE_BLOCK) {
+        int init = *incorrect_returns;
         for (int i = 0; i < ast->size; i++) {
             AST* child = ast->children[i];
             int check = CheckImproperStatements(child, is_for, incorrect_returns);
             if (check) {
-                return check;
+                return 1;
             }
             if (child->type == NODETYPE_CONTROL_IF_ELSE) {
-                if ((CheckImproperStatements(child->children[1], is_for, incorrect_returns) == 0)  && (CheckImproperStatements(child->children[2], is_for, incorrect_returns) == 0)) {
-                    return 0;
+                CheckImproperStatements(child->children[1], is_for, incorrect_returns);
+                if (child->children->size == 3) {
+                    CheckImproperStatements(child->children[2], is_for, incorrect_returns);
+                } else {
+                    if (child[child->size - 1] != NODETYPE_RETURN) {
+                        *incorrect_returns += 1;
+                    }
                 }
             }
-            if ((child->type == NODETYPE_RETURN) && !(*incorrect_returns)) {
+            if ((child->type == NODETYPE_RETURN) && (*incorrect_returns == init)) {
                 *incorrect_returns = -1;
             }
         }
-        if (!(*incorrect_returns)) {
+        if (*incorrect_returns == init) {
             *incorrect_returns += 1;
             return 1;
         }
@@ -127,7 +133,7 @@ int CheckImproperStatements(AST* ast, int is_for, int* incorrect_returns) {
         return 0;
     } else {
         for (int i = 0; i < ast->size; i++) {
-            if (CheckImproperStatements(ast->children[i], 0, incorrect_returns)) {
+            if (CheckImproperStatements(ast->children[i], is_for, incorrect_returns)) {
                 return -1;
             }
         }
